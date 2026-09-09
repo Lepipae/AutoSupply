@@ -1,4 +1,4 @@
-l_english:
+﻿l_english:
  AUTO_LOG_TOGGLE_TT: "Auto Logistics Allocation"
  AUTO_LOG_MINUS_TT: "Decrease assigned factories"
  AUTO_LOG_CIVS_TT: "Civilian Factories reserved for logistics automation."

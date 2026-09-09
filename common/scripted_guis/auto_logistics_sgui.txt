@@ -2,6 +2,7 @@ scripted_gui = {
 	auto_logistics_gui = {
 		context_type = player_context
 		window_name = "auto_logistics_container"
+		parent_window_name = "countryconstructionview"
 		
 		visible = {
 			is_ai = no
