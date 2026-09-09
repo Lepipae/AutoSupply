@@ -1,0 +1,41 @@
+name: Release Mod
+
+on:
+  push:
+    branches:
+      - main
+      - master # En caso de que uses master en lugar de main
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Necesario para poder crear la Release en GitHub
+      
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Empaquetar Mod en ZIP
+        run: |
+          # Nombramos el archivo de salida
+          ZIP_NAME="Auto_Logistics_Upgrade_build-${{ github.run_number }}.zip"
+          
+          # Comprimimos todo el contenido excluyendo carpetas y archivos innecesarios para el jugador
+          zip -r $ZIP_NAME . -x "*.git*" -x "*.github*" -x "DocumentoDiseño.md" -x "README.md"
+          
+          # Guardamos el nombre del archivo en el entorno para el siguiente paso
+          echo "ZIP_NAME=$ZIP_NAME" >> $GITHUB_ENV
+
+      - name: Crear Release de GitHub
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0.${{ github.run_number }}
+          name: Auto Logistics Upgrade - Build ${{ github.run_number }}
+          body: |
+            Release automática generada a partir del commit: ${{ github.sha }}
+            
+            Descarga el archivo `.zip` y extrae su contenido en tu carpeta de `mod/` de Hearts of Iron IV.
+          files: ${{ env.ZIP_NAME }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
