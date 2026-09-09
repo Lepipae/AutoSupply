@@ -1,0 +1,12 @@
+on_actions = {
+	on_daily_pulse_country = {
+		effects = {
+			auto_logistics_daily_tick_effect
+		}
+	}
+	on_weekly_pulse_country = {
+		effects = {
+			auto_logistics_weekly_eval_effect
+		}
+	}
+}

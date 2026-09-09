@@ -1,0 +1,49 @@
+guiTypes = {
+	containerWindowType = {
+		name = "auto_logistics_container"
+		position = { x = 10 y = 450 }
+		size = { width = 480 height = 80 }
+		
+		buttonType = {
+			name = "auto_log_toggle"
+			position = { x = 20 y = 10 }
+			quadTextureSprite = "GFX_button_148x34"
+			buttonText = "[GetAutoLogisticsToggleText]"
+			buttonFont = "hoi_16mbs"
+			pdx_tooltip = "AUTO_LOG_TOGGLE_TT"
+		}
+		
+		buttonType = {
+			name = "auto_log_minus"
+			position = { x = 180 y = 15 }
+			quadTextureSprite = "GFX_zoom_out"
+			pdx_tooltip = "AUTO_LOG_MINUS_TT"
+		}
+		
+		instantTextboxType = {
+			name = "auto_log_civs_text"
+			position = { x = 210 y = 18 }
+			font = "hoi_18mbs"
+			text = "[?auto_log_civs_target|Y0] Fabs"
+			maxWidth = 100
+			format = center
+			pdx_tooltip = "AUTO_LOG_CIVS_TT"
+		}
+		
+		buttonType = {
+			name = "auto_log_plus"
+			position = { x = 320 y = 15 }
+			quadTextureSprite = "GFX_zoom_in"
+			pdx_tooltip = "AUTO_LOG_PLUS_TT"
+		}
+		
+		instantTextboxType = {
+			name = "auto_log_status_text"
+			position = { x = 20 y = 50 }
+			font = "hoi_16mbs"
+			text = "AUTO_LOG_STATUS_DISPLAY"
+			maxWidth = 450
+			format = left
+		}
+	}
+}

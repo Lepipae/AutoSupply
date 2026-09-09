@@ -1,0 +1,173 @@
+auto_logistics_daily_tick_effect = {
+	if = {
+		limit = {
+			has_country_flag = auto_log_enabled
+			check_variable = { auto_log_civs_target > 0 }
+		}
+		
+		# Set active civs
+		set_variable = { auto_log_civs_active = var:auto_log_civs_target }
+		add_dynamic_modifier = { modifier = auto_logistics_civ_penalty scope = root }
+		
+		# If no target, try to find one
+		if = {
+			limit = { NOT = { has_country_flag = auto_log_has_target } }
+			auto_logistics_weekly_eval_effect = yes
+		}
+		
+		# If we have a target after eval, produce IC
+		if = {
+			limit = { has_country_flag = auto_log_has_target }
+			
+			set_temp_variable = { temp_ic_gain = var:auto_log_civs_active }
+			multiply_temp_variable = { temp_ic_gain = 5 } # 5 IC per factory
+			
+			set_temp_variable = { temp_speed = 1 }
+			add_to_temp_variable = { temp_speed = modifier@production_speed_infrastructure_factor }
+			multiply_temp_variable = { temp_ic_gain = var:temp_speed }
+			
+			add_to_variable = { auto_log_ic_pool = var:temp_ic_gain }
+			
+			# Check completion
+			auto_logistics_check_construction_effect = yes
+		}
+		else = {
+			# No targets available, liberate factories
+			set_variable = { auto_log_civs_active = 0 }
+			set_variable = { auto_log_ic_pool = 0 }
+		}
+	}
+	else = {
+		set_variable = { auto_log_civs_active = 0 }
+		set_variable = { auto_log_ic_pool = 0 }
+	}
+}
+
+auto_logistics_check_construction_effect = {
+	if = {
+		limit = {
+			has_country_flag = auto_log_target_is_railway
+			check_variable = { auto_log_ic_pool >= auto_log_ic_cost }
+		}
+		var:auto_log_prov_target = {
+			build_railway = { level = 1 }
+			# Fallback if standard build isn't used
+			add_building_construction = { type = railway level = 1 instant_build = yes }
+		}
+		subtract_from_variable = { auto_log_ic_pool = var:auto_log_ic_cost }
+		clr_country_flag = auto_log_has_target
+		clr_country_flag = auto_log_target_is_railway
+	}
+	else_if = {
+		limit = {
+			has_country_flag = auto_log_target_is_infra
+			check_variable = { auto_log_ic_pool >= auto_log_ic_cost }
+		}
+		var:auto_log_state_target = {
+			add_building_construction = { type = infrastructure level = 1 instant_build = yes }
+		}
+		subtract_from_variable = { auto_log_ic_pool = var:auto_log_ic_cost }
+		clr_country_flag = auto_log_has_target
+		clr_country_flag = auto_log_target_is_infra
+	}
+}
+
+auto_logistics_weekly_eval_effect = {
+	if = {
+		limit = {
+			NOT = { has_country_flag = auto_log_enabled }
+		}
+		# Abort evaluation if disabled
+	}
+	
+	# Only evaluate if we don't have a target
+	if = {
+		limit = { NOT = { has_country_flag = auto_log_has_target } }
+		
+		# FASE 1: Ferrocarriles a nodos de suministro
+		random_controlled_state = {
+			limit = {
+				any_state_province = {
+					is_supply_node = yes
+					NOT = { has_building = { type = railway level = 5 } }
+				}
+			}
+			score = {
+				base = 10
+				modifier = {
+					add = 50
+					has_combat = yes
+				}
+			}
+			
+			random_state_province = {
+				limit = {
+					is_supply_node = yes
+					NOT = { has_building = { type = railway level = 5 } }
+				}
+				ROOT = {
+					set_variable = { auto_log_prov_target = PREV }
+					set_country_flag = auto_log_has_target
+					set_country_flag = auto_log_target_is_railway
+					set_variable = { auto_log_ic_cost = 250 } # Base railway approx
+				}
+			}
+		}
+	}
+	
+	if = {
+		limit = { NOT = { has_country_flag = auto_log_has_target } }
+		
+		# FASE 2: Infraestructura en Estados
+		random_controlled_state = {
+			limit = {
+				free_building_slots = { building = infrastructure size > 0 }
+				NOT = { has_building = { type = infrastructure level = 5 } }
+			}
+			score = {
+				base = 10
+				
+				# 1. Presas
+				modifier = {
+					add = 100
+					OR = {
+						has_building = dam
+						has_building = dam_mountain
+					}
+				}
+				
+				# 2. Petroleo / Goma
+				modifier = {
+					add = 80
+					OR = {
+						has_resources_amount = { resource = oil amount > 0 }
+						has_resources_amount = { resource = rubber amount > 0 }
+					}
+				}
+				
+				# 3. Espacios libres
+				modifier = {
+					add = 50
+					free_building_slots > 5
+				}
+				modifier = {
+					add = 25
+					free_building_slots > 2
+				}
+				
+				# 4. Combate / Presencia de divisiones
+				modifier = {
+					add = 30
+					has_combat = yes
+				}
+			}
+			
+			ROOT = {
+				set_variable = { auto_log_state_target = PREV }
+				set_country_flag = auto_log_has_target
+				set_country_flag = auto_log_target_is_infra
+				set_variable = { auto_log_ic_cost = 3000 } # Coste base infraestructura
+			}
+		}
+	}
+}

@@ -1,0 +1,25 @@
+defined_text = {
+	name = GetAutoLogisticsStatusText
+	text = {
+		trigger = { has_country_flag = auto_log_target_is_railway }
+		localization_key = AUTO_LOG_STATUS_RAILWAY
+	}
+	text = {
+		trigger = { has_country_flag = auto_log_target_is_infra }
+		localization_key = AUTO_LOG_STATUS_INFRA
+	}
+	text = {
+		localization_key = AUTO_LOG_STATUS_INACTIVE
+	}
+}
+
+defined_text = {
+	name = GetAutoLogisticsToggleText
+	text = {
+		trigger = { has_country_flag = auto_log_enabled }
+		localization_key = AUTO_LOG_TOGGLE_ON
+	}
+	text = {
+		localization_key = AUTO_LOG_TOGGLE_OFF
+	}
+}

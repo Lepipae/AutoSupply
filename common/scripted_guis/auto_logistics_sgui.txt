@@ -1,0 +1,40 @@
+scripted_gui = {
+	auto_logistics_gui = {
+		context_type = player_context
+		window_name = "auto_logistics_container"
+		
+		visible = {
+			is_ai = no
+		}
+		
+		effects = {
+			auto_log_toggle = {
+				if = {
+					limit = { has_country_flag = auto_log_enabled }
+					clr_country_flag = auto_log_enabled
+					set_variable = { auto_log_civs_active = 0 }
+				}
+				else = {
+					set_country_flag = auto_log_enabled
+				}
+			}
+			auto_log_plus = {
+				if = {
+					limit = { 
+						OR = {
+							check_variable = { auto_log_civs_target < 15 }
+							NOT = { has_variable = auto_log_civs_target }
+						}
+					}
+					add_to_variable = { auto_log_civs_target = 1 }
+				}
+			}
+			auto_log_minus = {
+				if = {
+					limit = { check_variable = { auto_log_civs_target > 0 } }
+					subtract_from_variable = { auto_log_civs_target = 1 }
+				}
+			}
+		}
+	}
+}

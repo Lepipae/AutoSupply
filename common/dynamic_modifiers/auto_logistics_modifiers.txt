@@ -1,0 +1,7 @@
+auto_logistics_civ_penalty = {
+	enable = {
+		has_variable = auto_log_civs_active
+		check_variable = { auto_log_civs_active > 0 }
+	}
+	consumer_goods_expected_value = var:auto_log_civs_active
+}

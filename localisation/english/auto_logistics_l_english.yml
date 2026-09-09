@@ -1,0 +1,11 @@
+l_english:
+ AUTO_LOG_TOGGLE_TT: "Auto Logistics Allocation"
+ AUTO_LOG_MINUS_TT: "Decrease assigned factories"
+ AUTO_LOG_CIVS_TT: "Civilian Factories reserved for logistics automation."
+ AUTO_LOG_PLUS_TT: "Increase assigned factories"
+ AUTO_LOG_STATUS_DISPLAY: "[GetAutoLogisticsStatusText] ([?auto_log_ic_pool|0]/[?auto_log_ic_cost|0] IC)"
+ AUTO_LOG_STATUS_RAILWAY: "Upgrading railway at Node [?auto_log_prov_target.GetName]"
+ AUTO_LOG_STATUS_INFRA: "Upgrading Infrastructure in [?auto_log_state_target.GetName]"
+ AUTO_LOG_STATUS_INACTIVE: "Inactive / Logistics optimized"
+ AUTO_LOG_TOGGLE_ON: "ON"
+ AUTO_LOG_TOGGLE_OFF: "OFF"
