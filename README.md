@@ -8,16 +8,17 @@ Este mod introduce un sistema avanzado de **automatización logística** para He
 * **Mejoras de Infraestructura (Fase 2)**: Cuando las vías de tren están optimizadas, invierte en infraestructura en estados estratégicos (aquellos con presas, recursos estratégicos como petróleo y goma, con espacios de construcción libres, o donde hay combates activos).
 * **Integración Limpia en la Interfaz**: Accede a un nuevo panel integrado en la vista de construcción para ajustar tus fábricas asignadas con un clic.
 
-## Instalación (Manual)
+## Instalación (Rápida)
 
-Si has descargado la última versión (archivo `.zip`) desde la pestaña **Releases** de este repositorio, sigue estos pasos:
+Para instalar el mod, debes descargar ambos archivos de la última release y colocarlos en la carpeta correcta:
 
-1. Descomprime el archivo `.zip` descargado.
-2. Copia la carpeta extraída y el archivo `.mod` (por ejemplo, `auto_logistics.mod`) en tu directorio local de mods de Hearts of Iron IV:
+1. Ve a la pestaña **Releases** de este repositorio en GitHub.
+2. Descarga los archivos **`AutoSupply.zip`** y **`AutoSupply.mod`**.
+3. Coloca *ambos* archivos (sin descomprimir el `.zip`) directamente en tu directorio de mods de Hearts of Iron IV:
    - **Windows:** `C:\Usuarios\<TuUsuario>\Documentos\Paradox Interactive\Hearts of Iron IV\mod\`
    - **Linux:** `~/.local/share/Paradox Interactive/Hearts of Iron IV/mod/`
    - **Mac:** `~/Documents/Paradox Interactive/Hearts of Iron IV/mod/`
-3. Abre el Launcher de HOI4, ve a "Playsets" (Colecciones), añade el mod "Auto Logistics Upgrade" y actívalo.
+4. Abre el Launcher de HOI4, ve a "Playsets" (Colecciones), añade el mod "Auto Logistics Upgrade" y actívalo.
 
 *(Nota: Si no existe el directorio `mod`, puedes crearlo manualmente).*
 
@@ -28,8 +29,8 @@ Si has descargado la última versión (archivo `.zip`) desde la pestaña **Relea
 4. El mod te informará en todo momento sobre qué infraestructura se está mejorando actualmente.
 
 ## Compatibilidad
-* Desarrollado para Hearts of Iron IV v1.19.2.
+* Desarrollado para Hearts of Iron IV v1.19.*
 * Debería ser compatible con la mayoría de mods que no alteren por completo la interfaz `countryconstructionsview.gui` o el sistema base de fábricas.
 
 ---
-
+*Desarrollado según las especificaciones técnicas de diseño.*

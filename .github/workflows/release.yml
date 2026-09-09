@@ -4,13 +4,13 @@ on:
   push:
     branches:
       - main
-      - master # En caso de que uses master en lugar de main
+      - master
 
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Necesario para poder crear la Release en GitHub
+      contents: write
       
     steps:
       - name: Checkout del código
@@ -18,14 +18,16 @@ jobs:
 
       - name: Empaquetar Mod en ZIP
         run: |
-          # Nombramos el archivo de salida
-          ZIP_NAME="Auto_Logistics_Upgrade_build-${{ github.run_number }}.zip"
+          # Empaquetamos especificamente las carpetas de juego y el descriptor
+          zip -r AutoSupply.zip common interface localisation descriptor.mod
           
-          # Comprimimos todo el contenido excluyendo carpetas y archivos innecesarios para el jugador
-          zip -r $ZIP_NAME . -x "*.git*" -x "*.github*" -x "DocumentoDiseño.md" -x "README.md"
-          
-          # Guardamos el nombre del archivo en el entorno para el siguiente paso
-          echo "ZIP_NAME=$ZIP_NAME" >> $GITHUB_ENV
+      - name: Generar archivo AutoSupply.mod (Descriptor externo)
+        run: |
+          cat <<EOF > AutoSupply.mod
+          name="Auto Logistics Upgrade"
+          archive="mod/AutoSupply.zip"
+          supported_version="1.19.*"
+          EOF
 
       - name: Crear Release de GitHub
         uses: softprops/action-gh-release@v2
@@ -35,7 +37,10 @@ jobs:
           body: |
             Release automática generada a partir del commit: ${{ github.sha }}
             
-            Descarga el archivo `.zip` y extrae su contenido en tu carpeta de `mod/` de Hearts of Iron IV.
-          files: ${{ env.ZIP_NAME }}
+            **Instalación Rápida:**
+            Descarga `AutoSupply.zip` y `AutoSupply.mod` y colócalos *juntos* en tu carpeta de `mod/` de Hearts of Iron IV.
+          files: |
+            AutoSupply.zip
+            AutoSupply.mod
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
